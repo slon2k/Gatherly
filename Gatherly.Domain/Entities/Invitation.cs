@@ -1,12 +1,54 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Gatherly.Domain.Entities
+﻿namespace Gatherly.Domain.Entities
 {
-    internal class Invitation
+    public class Invitation
     {
+        internal Invitation(Guid id, Member member, Gathering gathering)
+        {
+            Id = id;
+            Status = InvitationStatus.Pending;
+            CreatedAt= DateTime.UtcNow;
+            Member = member;
+            MemberId= member.Id;
+            GatheringId= gathering.Id;
+            Gathering = gathering;
+        }
+
+        public Guid Id { get; private set; }
+
+        public Guid MemberId { get; private set; }
+
+        public Guid GatheringId { get; private set; }
+
+        public InvitationStatus Status { get; private set; }
+
+        public DateTime CreatedAt { get; private set; }
+
+        public DateTime? UpdatedAt { get; private set; }
+
+        public Member Member { get; private set; }
+
+        public Gathering Gathering { get; private set; }
+
+        public Attendee Accept()
+        {
+            Status = InvitationStatus.Accepted;
+            UpdatedAt= DateTime.UtcNow;
+            
+            var attendee = new Attendee
+            {
+                Gathering = Gathering,
+                GatheringId = GatheringId,
+                Member = Member,
+                MemderId = MemberId,
+            };
+
+            return attendee;
+        }
+
+        public void Expire()
+        {
+            Status = InvitationStatus.Expired;
+            UpdatedAt= DateTime.UtcNow;
+        }
     }
 }

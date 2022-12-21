@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Gatherly.Domain.Entities
+﻿namespace Gatherly.Domain.Entities
 {
-    internal class Attendee
+    public class Attendee
     {
+        public Guid MemderId { get; set; }
+
+        public Guid GatheringId { get; set; }
+
+        public Member Member { get; set; }
+
+        public Gathering Gathering { get; set; }
     }
 }

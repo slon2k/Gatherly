@@ -1,6 +1,9 @@
 ﻿namespace Gatherly.Domain.Entities
 {
-    public class GatheringType
+    public enum GatheringType
     {
+        Unknown = 0,
+        AttendeesFixedNumber = 1,
+        InvitationsExpiration = 2,
     }
 }
