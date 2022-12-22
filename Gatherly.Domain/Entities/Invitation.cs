@@ -29,23 +29,17 @@
 
         public Gathering Gathering { get; private set; }
 
-        public Attendee Accept()
+        internal Attendee Accept()
         {
             Status = InvitationStatus.Accepted;
             UpdatedAt= DateTime.UtcNow;
-            
-            var attendee = new Attendee
-            {
-                Gathering = Gathering,
-                GatheringId = GatheringId,
-                Member = Member,
-                MemderId = MemberId,
-            };
+
+            var attendee = new Attendee(this);
 
             return attendee;
         }
 
-        public void Expire()
+        internal void Expire()
         {
             Status = InvitationStatus.Expired;
             UpdatedAt= DateTime.UtcNow;

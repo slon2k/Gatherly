@@ -2,12 +2,28 @@
 {
     public class Attendee
     {
-        public Guid MemderId { get; set; }
+        internal Attendee(Invitation invitation)
+        {
+            if (invitation is null)
+            {
+                throw new ArgumentNullException(nameof(invitation));
+            }
 
-        public Guid GatheringId { get; set; }
+            Gathering = invitation.Gathering;
+            Member = invitation.Member;
+            GatheringId = invitation.GatheringId;
+            MemderId = invitation.MemberId;
+            CreatedAt = DateTime.UtcNow;
+        }
 
-        public Member Member { get; set; }
+        public Guid MemderId { get; private set; }
 
-        public Gathering Gathering { get; set; }
+        public Guid GatheringId { get; private set; }
+
+        public DateTime CreatedAt { get; private set; }
+
+        public Member Member { get; private set; }
+
+        public Gathering Gathering { get; private set; }
     }
 }

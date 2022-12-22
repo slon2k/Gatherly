@@ -87,8 +87,7 @@
 
         public Attendee AcceptInvitation(Invitation invitation)
         {
-            //var attendee = invitation.Accept();
-            var attendee = new Attendee();
+            var attendee = invitation.Accept();
 
             attendees.Add(attendee);
 
@@ -105,5 +104,8 @@
 
             return invitation;
         }
+
+        public bool IsExpired() => (Type == GatheringType.InvitationsExpiration && InvitationsExpireAt < DateTime.Now) ||
+            (Type == GatheringType.AttendeesFixedNumber && NumberOfAttendees >= MaxNumberOfAttendees);
     }
 }
