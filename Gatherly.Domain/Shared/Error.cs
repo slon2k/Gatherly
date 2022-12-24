@@ -13,6 +13,9 @@ public class Error
     }
 
     public static Error None => new("", "");
+
     public static Error NullValue => new("Error.NullValue", "The value is null");
+
+    public static Error Failure(string message) => new("Error.Failure", message);
 
 }

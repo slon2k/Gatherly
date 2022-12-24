@@ -3,7 +3,7 @@ using Gatherly.Domain.Primitives;
 
 namespace Gatherly.Domain.Entities
 {
-    public sealed class Gathering : Entity
+    public sealed class Gathering : AggregateRoot
     {
         private readonly List<Invitation> invitations = new();
 

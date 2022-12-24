@@ -2,7 +2,7 @@
 
 namespace Gatherly.Domain.Entities
 {
-    public class Member : Entity
+    public class Member : AggregateRoot
     {
 
         public string FirstName { get; set; }
