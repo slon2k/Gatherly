@@ -1,5 +1,7 @@
-﻿using Gatherly.Domain.Enums;
+﻿using Gatherly.Domain.DomainEvents;
+using Gatherly.Domain.Enums;
 using Gatherly.Domain.Primitives;
+using Gatherly.Domain.Shared;
 
 namespace Gatherly.Domain.Entities
 {
@@ -85,15 +87,18 @@ namespace Gatherly.Domain.Entities
             return gathering;
         }
 
-        public Attendee? AcceptInvitation(Invitation invitation)
+        public Result<Attendee> AcceptInvitation(Invitation invitation)
         {
             if (IsExpired())
             {
                 invitation.Expire();
-                return null;
+                
+                return Errors.Gathering.Expired;
             }
 
             var attendee = invitation.Accept();
+
+            RaiseDomainEvent(new InvitationAcceptedDomainEvent(invitation.Id, Id));
 
             attendees.Add(attendee);
 

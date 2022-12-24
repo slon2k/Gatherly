@@ -1,36 +1,83 @@
 ﻿namespace Gatherly.Domain.Shared;
 
-public class Result
+public record struct Result<TValue>
 {
-    public Result(bool isSuccess, Error error)
+    private readonly TValue? value = default;
+    
+    private readonly List<Error>? errors = null;
+
+    private static readonly Error NoErrors = Error.Failure("General.NoErrors", "The result is successful, no errors present");
+    
+    public bool IsError { get; }
+
+    public List<Error> Errors => errors ?? new List<Error> { NoErrors };
+
+    public TValue Value => value!;
+
+    public Error FirstError
     {
-        IsSuccess = isSuccess;
-        Error = error;
+        get
+        {
+            if (errors is null || errors.Count == 0)
+            {
+                return NoErrors;
+            }
+
+            return errors[0];
+        }
     }
 
-    public bool IsSuccess { get; }
+    public static Result<TValue> From(List<Error> errors)
+    {
+        return errors;
+    }
 
-    public Error Error { get; }
+    private Result(Error error)
+    {
+        errors = new List<Error> { error };
+        IsError= true;
+    }
 
-    public bool IsFailure => !IsSuccess;
+    private Result(IEnumerable<Error> errors)
+    {
+        this.errors = new List<Error>();
+        this.errors.AddRange(errors);
+        IsError= true;
+    }
 
-    public static Result Success() => new(true, Error.None);
-}
-
-public class Result<TValue>: Result
-{
-    private readonly TValue? value;
-
-    protected internal Result(TValue? value, bool isSuccess, Error error) : base(isSuccess, error)
+    private Result(TValue value)
     {
         this.value = value;
+        IsError= false;
     }
 
-    public TValue Value => IsSuccess ? value! : throw new InvalidOperationException("The result is failure and the value does not exist");
+    public static implicit operator Result<TValue>(TValue value)
+    {
+        return new Result<TValue>(value);
+    }
 
-    public static Result<TValue> Success(TValue value) => new(value, true, Error.None);
+    public static implicit operator Result<TValue>(Error error)
+    {
+        return new Result<TValue>(error);
+    }
 
-    public static Result<TValue> Failure(Error error) => new(default, false, error);
+    public static implicit operator Result<TValue>(List<Error> errors)
+    {
+        return new Result<TValue>(errors);
+    }
 
-    public static implicit operator Result<TValue>(TValue? value) => new(value, true, Error.None);
+    public static implicit operator Result<TValue>(Error[] errors)
+    {
+        return new Result<TValue>(errors);
+    }
+
+    public TResult Match<TResult>(Func<TValue, TResult> onValue, Func<List<Error>, TResult> onError)
+    {
+        if (IsError)
+        {
+            return onError(Errors);
+        }
+
+        return onValue(Value);
+    }
 }

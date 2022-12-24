@@ -20,11 +20,11 @@ public class GetMembersQueryHandler : IRequestHandler<GetMembersQuery, Result<IE
 		
 		try
 		{
-			return Result<IEnumerable<Member>>.Success(memberRepository.GetAll());
+			return memberRepository.GetAll().ToList();
 		}
 		catch (Exception e)
 		{
-			return Result<IEnumerable<Member>>.Failure(Error.Failure("CreateMember.Failure", e.Message));
+			return Error.Failure("CreateMember.Failure", e.Message);
 		}
     }
 }

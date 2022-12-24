@@ -19,12 +19,11 @@ namespace Gatherly.Web.Controllers
         {
             var result = await mediator.Send(new GetMembersQuery());
 
-            if (result.IsSuccess)
-            {
-                return Ok(result.Value);
-            }
+            return result.Match(
+                result => Ok(result),
+                errors => Problem(errors)
+            );
 
-            return Problem(result.Error.Message);
         }
 
         [HttpPost("members")]
@@ -32,12 +31,10 @@ namespace Gatherly.Web.Controllers
         {
             var result = await mediator.Send(command);
 
-            if (result.IsSuccess)
-            {
-                return Ok(result.Value);
-            }
-
-            return Problem(result.Error);
+            return result.Match(
+                result => Ok(result),
+                errors => Problem(errors)
+            );
         }
     }
 }

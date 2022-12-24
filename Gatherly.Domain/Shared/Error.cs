@@ -27,5 +27,4 @@ public class Error
     public static Error NotFound(string code, string message) => new(ErrorType.NotFound, code, message);
 
     public static Error Conflict(string code, string message) => new(ErrorType.Conflict, code, message);
-
 }
