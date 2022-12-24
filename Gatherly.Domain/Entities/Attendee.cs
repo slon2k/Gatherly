@@ -1,8 +1,10 @@
-﻿namespace Gatherly.Domain.Entities
+﻿using Gatherly.Domain.Primitives;
+
+namespace Gatherly.Domain.Entities
 {
-    public class Attendee
+    public class Attendee : Entity
     {
-        internal Attendee(Invitation invitation)
+        internal Attendee(Guid id, Invitation invitation) : base(id)
         {
             if (invitation is null)
             {
