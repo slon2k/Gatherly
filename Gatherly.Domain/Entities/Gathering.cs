@@ -1,14 +1,16 @@
-﻿namespace Gatherly.Domain.Entities
+﻿using Gatherly.Domain.Enums;
+using Gatherly.Domain.Primitives;
+
+namespace Gatherly.Domain.Entities
 {
-    public class Gathering
+    public sealed class Gathering : Entity
     {
         private readonly List<Invitation> invitations = new();
 
         private readonly List<Attendee> attendees = new();
 
-        private Gathering(Guid id, GatheringType type, Member creator, DateTime scheduledDate, string name, string? location)
+        private Gathering(Guid id, GatheringType type, Member creator, DateTime scheduledDate, string name, string? location) : base(id)
         {
-            Id = id;
             Type = type;
             CreatorId = creator.Id;
             Creator = creator;
@@ -16,8 +18,6 @@
             Name = name;
             Location = location;
         }
-
-        public Guid Id { get; private set; }
 
         public GatheringType Type { get; private set; }
 
@@ -85,8 +85,14 @@
             return gathering;
         }
 
-        public Attendee AcceptInvitation(Invitation invitation)
+        public Attendee? AcceptInvitation(Invitation invitation)
         {
+            if (IsExpired())
+            {
+                invitation.Expire();
+                return null;
+            }
+
             var attendee = invitation.Accept();
 
             attendees.Add(attendee);
