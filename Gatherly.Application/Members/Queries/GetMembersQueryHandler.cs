@@ -24,7 +24,7 @@ public class GetMembersQueryHandler : IRequestHandler<GetMembersQuery, Result<IE
 		}
 		catch (Exception e)
 		{
-			return Result<IEnumerable<Member>>.Failure(Error.Failure(e.Message));
+			return Result<IEnumerable<Member>>.Failure(Error.Failure("CreateMember.Failure", e.Message));
 		}
     }
 }

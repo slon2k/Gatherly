@@ -32,6 +32,11 @@ public class MockMemberRepository : IMemberRepository
         return members;
     }
 
+    public Member? GetByEmail(string email)
+    {
+        return members.FirstOrDefault(x => x.Email.ToLower().Equals(email.ToLower()));
+    }
+
     public Member? GetById(Guid id)
     {
         return members.FirstOrDefault(x => x.Id.Equals(id));

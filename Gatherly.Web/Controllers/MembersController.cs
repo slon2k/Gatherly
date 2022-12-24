@@ -37,7 +37,7 @@ namespace Gatherly.Web.Controllers
                 return Ok(result.Value);
             }
 
-            return Problem(result.Error.Message);
+            return Problem(result.Error);
         }
     }
 }

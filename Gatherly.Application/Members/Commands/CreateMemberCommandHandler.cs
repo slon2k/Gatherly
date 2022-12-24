@@ -19,14 +19,21 @@ internal class CreateMemberCommandHandler : IRequestHandler<CreateMemberCommand,
         try
         {
             await Task.CompletedTask;
+
+            if (memberRepository.GetByEmail(request.Email) is not null)
+            {
+                return Result<CreateMemberResponse>.Failure(Error.Conflict("CreateMember.DuplicateEmail", "Email is not unique"));
+            }
+
             var member = Member.Create(request.FirstName, request.LastName, request.Email);
+            
             memberRepository.Create(member);
             
             return Result<CreateMemberResponse>.Success(new CreateMemberResponse(member.Id, member.FirstName, member.LastName, member.Email));
         }
         catch (Exception e)
         {
-            return Result<CreateMemberResponse>.Failure(Error.Failure(e.Message));
+            return Result<CreateMemberResponse>.Failure(Error.Failure("CreateMember.Failure", e.Message));
         }
     }
 }
