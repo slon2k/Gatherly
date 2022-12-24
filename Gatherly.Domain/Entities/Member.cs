@@ -19,11 +19,16 @@ namespace Gatherly.Domain.Entities
 
         public IReadOnlyCollection<Attendee> Attendees => attendees;
 
-        public Member(Guid id, string firstName, string lastName, string email) : base(id)
+        private Member(Guid id, string firstName, string lastName, string email) : base(id)
         {
             FirstName = firstName;
             LastName = lastName;
             Email = email;
+        }
+
+        public static Member Create(string firstName, string lastName, string email)
+        {
+            return new(Guid.NewGuid(), firstName, lastName, email);
         }
     }
 }

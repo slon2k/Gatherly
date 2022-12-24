@@ -1,4 +1,5 @@
-﻿using Gatherly.Application.Members.Queries;
+﻿using Gatherly.Application.Members.Commands;
+using Gatherly.Application.Members.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,6 +18,19 @@ namespace Gatherly.Web.Controllers
         public async Task<IActionResult> GetMembers()
         {
             var result = await mediator.Send(new GetMembersQuery());
+
+            if (result.IsSuccess)
+            {
+                return Ok(result.Value);
+            }
+
+            return Problem(result.Error.Message);
+        }
+
+        [HttpPost("members")]
+        public async Task<IActionResult> CreateMember(CreateMemberCommand command)
+        {
+            var result = await mediator.Send(command);
 
             if (result.IsSuccess)
             {
