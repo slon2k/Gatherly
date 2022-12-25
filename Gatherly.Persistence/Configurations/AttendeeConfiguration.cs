@@ -5,41 +5,35 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Gatherly.Persistence.Configurations;
 
-internal class InvitationConfiguration : IEntityTypeConfiguration<Invitation>
+internal class AttendeeConfiguration : IEntityTypeConfiguration<Attendee>
 {
-    public void Configure(EntityTypeBuilder<Invitation> builder)
+    public void Configure(EntityTypeBuilder<Attendee> builder)
     {
-        builder.ToTable("Invitation");
+        builder.ToTable("Attendee");
 
-        builder.HasUniqueIdentifier<Invitation, Guid>();
+        builder.HasUniqueIdentifier<Attendee, Guid>();
 
         builder.Property(e => e.MemberId)
             .IsRequired();
 
         builder.Property(e => e.GatheringId)
             .IsRequired();
-
-        builder.Property(e => e.Status)
-            .IsRequired();
-
+       
         builder.Property(e => e.CreatedAt)
             .HasColumnType("Date")
             .IsRequired();
 
-        builder.Property(e => e.UpdatedAt)
-            .HasColumnType("Date")
-            .IsRequired(false);
-
         builder.HasOne(e => e.Member)
-            .WithMany(e => e.Invitations)
+            .WithMany(e => e.Attendees)
             .HasForeignKey(e => e.MemberId)
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(e => e.Gathering)
-            .WithMany(e => e.Invitations)
+            .WithMany(e => e.Attendees)
             .HasForeignKey(e => e.GatheringId)
             .OnDelete(DeleteBehavior.Restrict);
 
-
+        builder.HasIndex(e => new { e.MemberId, e.GatheringId })
+            .IsUnique();
     }
 }
