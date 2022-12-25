@@ -7,6 +7,10 @@ namespace Gatherly.Domain.Entities
 {
     public sealed class Gathering : AggregateRoot
     {
+        public const int NameMaxLength = 100;
+        public const int LocationMaxLength = 100;
+        public const int NumberOfAttendeesLimit = 1000;
+
         private readonly List<Invitation> invitations = new();
 
         private readonly List<Attendee> attendees = new();
@@ -25,8 +29,6 @@ namespace Gatherly.Domain.Entities
 
         public Guid CreatorId { get; private set; }
 
-        public Member Creator { get; private set; }
-
         public DateTime ScheduledDate { get; private set; }
 
         public string Name { get; private set; }
@@ -38,6 +40,8 @@ namespace Gatherly.Domain.Entities
         public int? MaxNumberOfAttendees { get; set; }
 
         public DateTime? InvitationsExpireAt { get; set; }
+
+        public Member Creator { get; private set; }
 
         public IReadOnlyCollection<Invitation> Invitations => invitations;
 

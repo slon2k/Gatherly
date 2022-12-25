@@ -21,9 +21,13 @@ namespace Gatherly.Domain.Entities
 
         private readonly List<Attendee> attendees = new();
 
+        private readonly List<Gathering> gatherings = new();
+
         public IReadOnlyCollection<Invitation> Invitations => invitations;
 
         public IReadOnlyCollection<Attendee> Attendees => attendees;
+
+        public IReadOnlyCollection<Gathering> GatheringsCreated => gatherings;
 
         private Member(Guid id, string firstName, string lastName, string email) : base(id)
         {
