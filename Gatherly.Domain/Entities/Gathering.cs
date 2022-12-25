@@ -33,7 +33,7 @@ namespace Gatherly.Domain.Entities
 
         public string? Location { get; set; }
 
-        public int NumberOfAttendees { get; private set; }
+        public int NumberOfAttendees => attendees.Count;
 
         public int? MaxNumberOfAttendees { get; set; }
 
@@ -101,8 +101,6 @@ namespace Gatherly.Domain.Entities
             RaiseDomainEvent(new InvitationAcceptedDomainEvent(invitation.Id, Id));
 
             attendees.Add(attendee);
-
-            NumberOfAttendees++;
 
             return attendee;
         }

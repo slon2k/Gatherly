@@ -5,6 +5,11 @@ namespace Gatherly.Domain.Entities
 {
     public class Member : AggregateRoot
     {
+        public const int FirstNameMaxLength = 100;
+        
+        public const int LastNameMaxLength = 100;
+
+        public const int EmailMaxLength = 50;
 
         public string FirstName { get; set; }
 
