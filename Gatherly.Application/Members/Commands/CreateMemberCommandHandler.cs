@@ -26,6 +26,8 @@ internal class CreateMemberCommandHandler : IRequestHandler<CreateMemberCommand,
             var member = Member.Create(request.FirstName, request.LastName, request.Email);
             
             await memberRepository.AddAsync(member, cancellationToken);
+
+            await memberRepository.SaveChangesAsync(cancellationToken);
             
             return new CreateMemberResponse(member.Id, member.FirstName, member.LastName, member.Email);
         }
