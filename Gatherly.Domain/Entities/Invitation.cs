@@ -5,6 +5,14 @@ namespace Gatherly.Domain.Entities
 {
     public sealed class Invitation : Entity
     {
+        internal Invitation(Guid id, Guid memberId, Guid gatheringId) : base(id)
+        {
+            Status = InvitationStatus.Pending;
+            CreatedAt= DateTime.UtcNow;
+            MemberId= memberId;
+            GatheringId= gatheringId;
+        }
+
         internal Invitation(Guid id, Member member, Gathering gathering) : base(id)
         {
             Status = InvitationStatus.Pending;

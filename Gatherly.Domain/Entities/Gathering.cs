@@ -15,6 +15,15 @@ namespace Gatherly.Domain.Entities
 
         private readonly List<Attendee> attendees = new();
 
+        private Gathering(Guid id, GatheringType type, Guid creatorId, DateTime scheduledDate, string name, string? location) : base(id)
+        {
+            Type = type;
+            CreatorId = creatorId;
+            ScheduledDate = scheduledDate;
+            Name = name;
+            Location = location;
+        }
+
         private Gathering(Guid id, GatheringType type, Member creator, DateTime scheduledDate, string name, string? location) : base(id)
         {
             Type = type;

@@ -14,12 +14,10 @@ namespace Gatherly.Domain.Entities
 
         public Gathering Gathering { get; private set; }
 
-        private Attendee(Guid id, Member member, Gathering gathering) : base(id)
+        private Attendee(Guid id, Guid memberId, Guid gatheringId) : base(id)
         {
-            Member = member;
-            Gathering = gathering;
-            GatheringId = gathering.Id;
-            MemberId = member.Id;
+            GatheringId = gatheringId;
+            MemberId = memberId;
             CreatedAt = DateTime.UtcNow;
         }
 
