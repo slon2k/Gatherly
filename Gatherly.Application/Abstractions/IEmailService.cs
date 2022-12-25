@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Gatherly.Domain.Entities;
 
-namespace Gatherly.Application.Abstractions
+namespace Gatherly.Application.Abstractions;
+
+public interface IEmailService
 {
-    internal interface IEmailService
-    {
-    }
+    Task SendInvitationEmailAsync(Invitation invitation, CancellationToken cancellationToken = default);
+
+    Task SendWelcomeEmailAsync(Member member, CancellationToken cancellationToken = default);
+
 }

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Gatherly.Domain.Shared;
 
-namespace Gatherly.Domain.Errors
+namespace Gatherly.Domain.Errors;
+
+public static class Gathering
 {
-    internal class Gathering
-    {
-    }
-}
+    public static Error Expired => Error.Failure("Gathering.InvitationExpired", "The invitation is expired");
+}   

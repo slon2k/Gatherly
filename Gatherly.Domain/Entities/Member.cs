@@ -1,4 +1,5 @@
-﻿using Gatherly.Domain.Primitives;
+﻿using Gatherly.Domain.DomainEvents;
+using Gatherly.Domain.Primitives;
 
 namespace Gatherly.Domain.Entities
 {
@@ -28,7 +29,11 @@ namespace Gatherly.Domain.Entities
 
         public static Member Create(string firstName, string lastName, string email)
         {
-            return new(Guid.NewGuid(), firstName, lastName, email);
+            var member = new Member(Guid.NewGuid(), firstName, lastName, email);
+
+            member.RaiseDomainEvent(new MemberRegisteredDomainEvent(member.Id));
+
+            return member;
         }
     }
 }
