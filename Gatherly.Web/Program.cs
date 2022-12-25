@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
     .AddApplication()
-    .AddPersistense()
+    .AddPersistense(builder.Configuration)
     .AddInfrastructure();
 
 builder.Services.AddControllers();
