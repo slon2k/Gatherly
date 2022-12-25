@@ -28,6 +28,7 @@ internal class MemberConfiguration : IEntityTypeConfiguration<Member>
             .IsRequired()
             .HasMaxLength(Member.EmailMaxLength);
 
-        builder.HasIndex(e => e.Email).IsUnique();
+        builder.HasIndex(e => e.Email)
+            .IsUnique();
     }
 }
