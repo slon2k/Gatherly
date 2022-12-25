@@ -1,4 +1,5 @@
 ﻿using Gatherly.Domain.Entities;
+using Gatherly.Persistence.Outbox;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -29,4 +30,6 @@ public class ApplicationDbContext : DbContext
     public DbSet<Attendee> Attendees { get; set; }
 
     public DbSet<Invitation> Invites { get; set; }
+
+    public DbSet<OutboxMessage> OutboxMessages { get; set; }
 }
