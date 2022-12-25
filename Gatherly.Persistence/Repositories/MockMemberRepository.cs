@@ -1,7 +1,7 @@
 ﻿using Gatherly.Domain.Entities;
 using Gatherly.Domain.Repositories;
 
-namespace Gatherly.Infrastructure.Repositories;
+namespace Gatherly.Persistense.Repositories;
 
 public class MockMemberRepository : IMemberRepository
 {

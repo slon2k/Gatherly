@@ -1,10 +1,12 @@
 using Gatherly.Application;
 using Gatherly.Infrastructure;
+using Gatherly.Persistense;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
     .AddApplication()
+    .AddPersistense()
     .AddInfrastructure();
 
 builder.Services.AddControllers();

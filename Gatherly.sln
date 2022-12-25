@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gatherly.Web", "Gatherly.Web\Gatherly.Web.csproj", "{A8847E02-DBAF-4573-9D1C-70D2019737EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gatherly.Web", "Gatherly.Web\Gatherly.Web.csproj", "{A8847E02-DBAF-4573-9D1C-70D2019737EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gatherly.Domain", "Gatherly.Domain\Gatherly.Domain.csproj", "{02DABC3D-7CF0-4816-A8CC-91972EE329D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gatherly.Domain", "Gatherly.Domain\Gatherly.Domain.csproj", "{02DABC3D-7CF0-4816-A8CC-91972EE329D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gatherly.Application", "Gatherly.Application\Gatherly.Application.csproj", "{6FB9CD90-2AF6-44A8-BC9D-333C34F0E45E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gatherly.Application", "Gatherly.Application\Gatherly.Application.csproj", "{6FB9CD90-2AF6-44A8-BC9D-333C34F0E45E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gatherly.Infrastructure", "Gatherly.Infrastructure\Gatherly.Infrastructure.csproj", "{7A56F634-D6E8-4CDC-9765-19135EC2CCB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gatherly.Infrastructure", "Gatherly.Infrastructure\Gatherly.Infrastructure.csproj", "{7A56F634-D6E8-4CDC-9765-19135EC2CCB9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gatherly.Persistence", "Gatherly.Persistence\Gatherly.Persistence.csproj", "{4BD95C2F-4C94-4305-A9B2-EED207B2AC76}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{7A56F634-D6E8-4CDC-9765-19135EC2CCB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A56F634-D6E8-4CDC-9765-19135EC2CCB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A56F634-D6E8-4CDC-9765-19135EC2CCB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BD95C2F-4C94-4305-A9B2-EED207B2AC76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BD95C2F-4C94-4305-A9B2-EED207B2AC76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BD95C2F-4C94-4305-A9B2-EED207B2AC76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BD95C2F-4C94-4305-A9B2-EED207B2AC76}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
