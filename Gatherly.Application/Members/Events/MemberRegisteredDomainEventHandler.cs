@@ -20,7 +20,7 @@ namespace Gatherly.Application.Members.Events
 
         public async Task Handle(MemberRegisteredDomainEvent notification, CancellationToken cancellationToken)
         {
-            if (memberRepository.GetById(notification.MemberId) is Member member)
+            if (await memberRepository.FindAsync(notification.MemberId, cancellationToken) is Member member)
             {
                 await emailService.SendWelcomeEmailAsync(member, cancellationToken);
             }

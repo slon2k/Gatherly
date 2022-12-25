@@ -16,11 +16,11 @@ public class GetMembersQueryHandler : IRequestHandler<GetMembersQuery, Result<IE
 
     public async Task<Result<IEnumerable<Member>>> Handle(GetMembersQuery request, CancellationToken cancellationToken)
     {
-		await Task.CompletedTask;
-		
 		try
 		{
-			return memberRepository.GetAll().ToList();
+            var result = await memberRepository.GetAllAsync(cancellationToken);
+
+            return result.ToList();
 		}
 		catch (Exception e)
 		{

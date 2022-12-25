@@ -4,13 +4,19 @@ namespace Gatherly.Domain.Repositories;
 
 public interface IRepository<TEntity> where TEntity : AggregateRoot
 {
-    TEntity? GetById(Guid id);
+    Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default);
 
-    IEnumerable<TEntity> GetAll();
+    Task<TEntity?> FindAsync(Guid id, CancellationToken cancellationToken = default);
 
-    void Create(TEntity entity);
+    Task<bool> AnyAsync(Guid id, CancellationToken cancellationToken = default);
+
+    Task DeleteAsync(Guid id, CancellationToken cancellationToken = default);
+    
+    Task AddAsync(TEntity entity, CancellationToken cancellationToken = default);
+    
+    void Delete(TEntity entity);
 
     void Update(TEntity entity);
 
-    void Delete(Guid id);
+    Task SaveChangesAsync(CancellationToken cancellationToken = default);
 }

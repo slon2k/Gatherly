@@ -4,5 +4,5 @@ namespace Gatherly.Domain.Repositories;
 
 public interface IGatheringRepository : IRepository<Gathering>
 {
-    void AddInvitation(Invitation invitation);
+    Task<Gathering?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
 }

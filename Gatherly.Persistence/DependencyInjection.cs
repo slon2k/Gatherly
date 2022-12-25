@@ -14,7 +14,7 @@ public static class DependencyInjection
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
         services.AddScoped<IMemberRepository, MemberRepository>();
-        services.AddScoped<IGatheringRepository, MockGatheringRepository>();
+        services.AddScoped<IGatheringRepository, GatheringRepository>();
 
         return services;
     }

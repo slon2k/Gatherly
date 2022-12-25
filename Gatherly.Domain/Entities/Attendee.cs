@@ -10,16 +10,9 @@ namespace Gatherly.Domain.Entities
 
         public DateTime CreatedAt { get; private set; }
 
-        public Member Member { get; private set; }
+        public virtual Member Member { get; private set; }
 
-        public Gathering Gathering { get; private set; }
-
-        private Attendee(Guid id, Guid memberId, Guid gatheringId) : base(id)
-        {
-            GatheringId = gatheringId;
-            MemberId = memberId;
-            CreatedAt = DateTime.UtcNow;
-        }
+        public virtual Gathering Gathering { get; private set; }
 
         internal Attendee(Guid id, Invitation invitation) : base(id)
         {
@@ -33,6 +26,10 @@ namespace Gatherly.Domain.Entities
             GatheringId = invitation.GatheringId;
             MemberId = invitation.MemberId;
             CreatedAt = DateTime.UtcNow;
+        }
+
+        private Attendee(Guid id) : base(id)
+        {
         }
     }
 }

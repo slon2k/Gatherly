@@ -3,26 +3,8 @@ using Gatherly.Domain.Primitives;
 
 namespace Gatherly.Domain.Entities
 {
-    public sealed class Invitation : Entity
+    public class Invitation : Entity
     {
-        internal Invitation(Guid id, Guid memberId, Guid gatheringId) : base(id)
-        {
-            Status = InvitationStatus.Pending;
-            CreatedAt= DateTime.UtcNow;
-            MemberId= memberId;
-            GatheringId= gatheringId;
-        }
-
-        internal Invitation(Guid id, Member member, Gathering gathering) : base(id)
-        {
-            Status = InvitationStatus.Pending;
-            CreatedAt= DateTime.UtcNow;
-            Member = member;
-            MemberId= member.Id;
-            GatheringId= gathering.Id;
-            Gathering = gathering;
-        }
-
         public Guid MemberId { get; private set; }
 
         public Guid GatheringId { get; private set; }
@@ -33,9 +15,25 @@ namespace Gatherly.Domain.Entities
 
         public DateTime? UpdatedAt { get; private set; }
 
-        public Member Member { get; private set; }
+        public virtual Member Member { get; private set; }
 
-        public Gathering Gathering { get; private set; }
+        public virtual Gathering Gathering { get; private set; }
+
+        private Invitation(Guid id) : base(id)
+        {
+            Status = InvitationStatus.Pending;
+            CreatedAt = DateTime.UtcNow;
+        }
+
+        internal Invitation(Guid id, Member member, Gathering gathering) : base(id)
+        {
+            Status = InvitationStatus.Pending;
+            CreatedAt = DateTime.UtcNow;
+            Member = member;
+            MemberId = member.Id;
+            GatheringId = gathering.Id;
+            Gathering = gathering;
+        }
 
         internal Attendee Accept()
         {

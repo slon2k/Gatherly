@@ -19,18 +19,16 @@ public sealed class InvitationAcceptedDomainEventHandler : INotificationHandler<
 
     public async Task Handle(InvitationAcceptedDomainEvent notification, CancellationToken cancellationToken)
     {
-        await Task.CompletedTask;
+        var gathering = await gatheringRepository.GetByIdAsync(notification.GatheringId, cancellationToken);
 
-        var gathering = gatheringRepository.GetById(notification.GatheringId);
-
-        if (gathering == null)
+        if (gathering is null)
         {
             return;
         }
 
         var invitation = gathering.Invitations.FirstOrDefault(i => i.Id == notification.InvitationId);
 
-        if (invitation == null)
+        if (invitation is null)
         {
             return;
         }
