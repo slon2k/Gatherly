@@ -1,11 +1,11 @@
-﻿using Gatherly.Domain.Entities;
+﻿using Gatherly.Application.Abstractions;
+using Gatherly.Domain.Entities;
 using Gatherly.Domain.Repositories;
 using Gatherly.Domain.Shared;
-using MediatR;
 
 namespace Gatherly.Application.Members.Commands;
 
-internal class CreateMemberCommandHandler : IRequestHandler<CreateMemberCommand, Result<CreateMemberResponse>>
+internal class CreateMemberCommandHandler : ICommandHandler<CreateMemberCommand, CreateMemberResponse>
 {
     private readonly IMemberRepository memberRepository;
 

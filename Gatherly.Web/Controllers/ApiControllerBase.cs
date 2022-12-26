@@ -1,5 +1,6 @@
 ﻿using Gatherly.Domain.Enums;
 using Gatherly.Domain.Shared;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
@@ -9,6 +10,13 @@ namespace Gatherly.Web.Controllers;
 [ApiController]
 public abstract class ApiControllerBase : ControllerBase
 {
+    protected readonly ISender sender;
+
+    protected ApiControllerBase(ISender sender)
+    {
+        this.sender = sender;
+    }
+
     protected IActionResult Problem(List<Error> errors)
     {
         if (errors.Count == 0)

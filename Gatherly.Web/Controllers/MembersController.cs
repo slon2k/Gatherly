@@ -7,17 +7,14 @@ namespace Gatherly.Web.Controllers
 {
     public class MembersController : ApiControllerBase
     {
-        private readonly ISender mediator;
-
-        public MembersController(ISender mediator)
+        public MembersController(ISender sender) : base(sender)
         {
-            this.mediator = mediator;
         }
 
         [HttpGet("members")]
         public async Task<IActionResult> GetMembers()
         {
-            var result = await mediator.Send(new GetMembersQuery());
+            var result = await sender.Send(new GetMembersQuery());
 
             return result.Match(
                 result => Ok(result),
@@ -29,7 +26,7 @@ namespace Gatherly.Web.Controllers
         [HttpPost("members")]
         public async Task<IActionResult> CreateMember(CreateMemberCommand command)
         {
-            var result = await mediator.Send(command);
+            var result = await sender.Send(command);
 
             return result.Match(
                 result => Ok(result),

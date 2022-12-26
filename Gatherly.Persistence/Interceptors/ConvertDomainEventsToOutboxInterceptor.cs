@@ -2,9 +2,6 @@
 using Gatherly.Persistence.Outbox;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Newtonsoft.Json;
-using System.Linq;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace Gatherly.Persistence.Interceptors;
 

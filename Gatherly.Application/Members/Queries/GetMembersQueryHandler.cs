@@ -1,11 +1,11 @@
-﻿using Gatherly.Domain.Entities;
+﻿using Gatherly.Application.Abstractions;
+using Gatherly.Domain.Entities;
 using Gatherly.Domain.Repositories;
 using Gatherly.Domain.Shared;
-using MediatR;
 
 namespace Gatherly.Application.Members.Queries;
 
-public class GetMembersQueryHandler : IRequestHandler<GetMembersQuery, Result<IEnumerable<Member>>>
+public class GetMembersQueryHandler : IQueryHandler<GetMembersQuery, IEnumerable<Member>>
 {
     private readonly IMemberRepository memberRepository;
 

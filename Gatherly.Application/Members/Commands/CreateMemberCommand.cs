@@ -1,6 +1,5 @@
-﻿using Gatherly.Domain.Shared;
-using MediatR;
+﻿using Gatherly.Application.Abstractions;
 
 namespace Gatherly.Application.Members.Commands;
 
-public record CreateMemberCommand(string FirstName, string LastName, string Email) : IRequest<Result<CreateMemberResponse>>;
+public record CreateMemberCommand(string FirstName, string LastName, string Email) : ICommand<CreateMemberResponse>;

@@ -59,9 +59,7 @@ public readonly record struct Result : IResult
 
     public static Result From(List<Error> errors) => new(errors);
 
-    public Result()
-    {
-    }
+    public static Result Success() => new();
 
     private Result(Error error)
     {
