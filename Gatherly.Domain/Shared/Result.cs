@@ -1,83 +1,83 @@
 ﻿namespace Gatherly.Domain.Shared;
+using static Domain.Errors.Result;
 
-public record struct Result<TValue>
+public readonly record struct Result<TValue> : IResult<TValue>
 {
     private readonly TValue? value = default;
-    
+
     private readonly List<Error>? errors = null;
 
-    private static readonly Error NoErrors = Error.Failure("General.NoErrors", "The result is successful, no errors present");
-    
-    public bool IsError { get; }
+    public bool IsFailure => errors is not null;
+
+    public bool IsSuccess => !IsFailure;
 
     public List<Error> Errors => errors ?? new List<Error> { NoErrors };
 
     public TValue Value => value!;
 
-    public Error FirstError
-    {
-        get
-        {
-            if (errors is null || errors.Count == 0)
-            {
-                return NoErrors;
-            }
+    public Error FirstError => (errors is null || errors.Count == 0) ? NoErrors : errors[0];
 
-            return errors[0];
-        }
-    }
-
-    public static Result<TValue> From(List<Error> errors)
-    {
-        return errors;
-    }
+    public static Result<TValue> From(List<Error> errors) => errors;
 
     private Result(Error error)
     {
         errors = new List<Error> { error };
-        IsError= true;
     }
 
     private Result(IEnumerable<Error> errors)
     {
-        this.errors = new List<Error>();
-        this.errors.AddRange(errors);
-        IsError= true;
+        this.errors = new List<Error>(errors);
     }
 
     private Result(TValue value)
     {
         this.value = value;
-        IsError= false;
     }
 
-    public static implicit operator Result<TValue>(TValue value)
+    public static implicit operator Result<TValue>(TValue value) => new(value);
+
+    public static implicit operator Result<TValue>(Error error) => new(error);
+
+    public static implicit operator Result<TValue>(List<Error> errors) => new(errors);
+
+    public static implicit operator Result<TValue>(Error[] errors) => new(errors);
+
+    public TResult Match<TResult>(Func<TValue, TResult> onSuccess, Func<List<Error>, TResult> onFailure) => IsFailure ? onFailure(Errors) : onSuccess(Value);
+}
+
+public readonly record struct Result : IResult
+{
+    private readonly List<Error>? errors = null;
+
+    public bool IsFailure => errors is not null;
+
+    public bool IsSuccess => errors is null;
+
+    public List<Error> Errors => errors ?? new List<Error> { NoErrors };
+
+    public Error FirstError => (errors is null || errors.Count == 0) ? NoErrors : errors[0];
+
+    public static Result From(List<Error> errors) => new(errors);
+
+    public Result()
     {
-        return new Result<TValue>(value);
     }
 
-    public static implicit operator Result<TValue>(Error error)
+    private Result(Error error)
     {
-        return new Result<TValue>(error);
+        errors = new List<Error> { error };
     }
 
-    public static implicit operator Result<TValue>(List<Error> errors)
+    private Result(IEnumerable<Error> errors)
     {
-        return new Result<TValue>(errors);
+        this.errors = new List<Error>(errors);
     }
 
-    public static implicit operator Result<TValue>(Error[] errors)
-    {
-        return new Result<TValue>(errors);
-    }
+    public static implicit operator Result(Error error) => new(error);
 
-    public TResult Match<TResult>(Func<TValue, TResult> onValue, Func<List<Error>, TResult> onError)
-    {
-        if (IsError)
-        {
-            return onError(Errors);
-        }
+    public static implicit operator Result(List<Error> errors) => new(errors);
 
-        return onValue(Value);
-    }
+    public static implicit operator Result(Error[] errors) => new(errors);
+
+    public TResult Match<TResult>(Func<TResult> onSuccess, Func<List<Error>, TResult> onFailure) => IsFailure ? onFailure(Errors) : onSuccess();
 }

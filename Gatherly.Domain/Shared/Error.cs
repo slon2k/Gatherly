@@ -12,11 +12,12 @@ public class Error
 
     private Error(ErrorType type, string code, string message)
     {
+        Type = type;
         Code = code;
         Message = message;
     }
 
-    public static Error None => new(ErrorType.None, "", "");
+    public static Error None(string code, string message) => new(ErrorType.None, code, message);
 
     public static Error Validation(string code, string message) => new(ErrorType.Validation, code, message);
 
