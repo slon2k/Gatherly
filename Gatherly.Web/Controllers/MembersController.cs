@@ -45,5 +45,15 @@ namespace Gatherly.Web.Controllers
             );
         }
 
+        [HttpPut]
+        public async Task<IActionResult> UpdateMember(UpdateMemberCommand command)
+        {
+            var result = await sender.Send(command);
+
+            return result.Match(
+                result => Ok(result),
+                errors => Problem(errors)
+            );
+        }
     }
 }
