@@ -13,6 +13,8 @@ internal class MemberConfiguration : IEntityTypeConfiguration<Member>
 
         builder.HasUniqueIdentifier<Member, Guid>();
 
+        builder.IsAuditable();
+
         builder.Property(e => e.FirstName)
             .HasColumnName("FirstName")
             .IsRequired()

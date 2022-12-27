@@ -38,7 +38,6 @@ namespace Gatherly.Domain.Entities
         internal Attendee Accept()
         {
             Status = InvitationStatus.Accepted;
-            UpdatedAt= DateTime.UtcNow;
 
             var attendee = new Attendee(Guid.NewGuid(), this);
 
@@ -48,7 +47,6 @@ namespace Gatherly.Domain.Entities
         internal void Expire()
         {
             Status = InvitationStatus.Expired;
-            UpdatedAt= DateTime.UtcNow;
         }
     }
 }

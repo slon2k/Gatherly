@@ -178,7 +178,7 @@ namespace Gatherly.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("OutboxMessages");
+                    b.ToTable("OutboxMessages", (string)null);
                 });
 
             modelBuilder.Entity("Gatherly.Domain.Entities.Attendee", b =>

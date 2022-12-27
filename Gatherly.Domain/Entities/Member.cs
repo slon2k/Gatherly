@@ -3,7 +3,7 @@ using Gatherly.Domain.Primitives;
 
 namespace Gatherly.Domain.Entities
 {
-    public class Member : AggregateRoot
+    public class Member : AggregateRoot, IAuditableEntity
     {
         public const int FirstNameMaxLength = 100;
         
@@ -16,6 +16,10 @@ namespace Gatherly.Domain.Entities
         public string LastName { get; set; }
 
         public string Email { get; set; }
+
+        public DateTime CreatedAt { get; }
+
+        public DateTime? UpdatedAt { get; }
 
         private readonly List<Invitation> invitations = new();
 
@@ -34,6 +38,7 @@ namespace Gatherly.Domain.Entities
             FirstName = firstName;
             LastName = lastName;
             Email = email;
+            CreatedAt= DateTime.Now;
         }
 
         public static Member Create(string firstName, string lastName, string email)
