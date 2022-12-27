@@ -2,7 +2,7 @@
 
 namespace Gatherly.Domain.Entities
 {
-    public class Attendee : Entity
+    public class Attendee : Entity, IAuditableEntity
     {
         public Guid MemberId { get; private set; }
 
@@ -10,6 +10,8 @@ namespace Gatherly.Domain.Entities
 
         public DateTime CreatedAt { get; private set; }
 
+        public DateTime? UpdatedAt { get; private set; }
+        
         public virtual Member Member { get; private set; }
 
         public virtual Gathering Gathering { get; private set; }

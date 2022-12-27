@@ -18,10 +18,11 @@ internal class AttendeeConfiguration : IEntityTypeConfiguration<Attendee>
 
         builder.Property(e => e.GatheringId)
             .IsRequired();
-       
-        builder.Property(e => e.CreatedAt)
-            .HasColumnType("Date")
-            .IsRequired();
+
+        builder.IsAuditable();
+        //builder.Property(e => e.CreatedAt)
+        //    .HasColumnType("Date")
+        //    .IsRequired();
 
         builder.HasOne(e => e.Member)
             .WithMany(e => e.Attendees)

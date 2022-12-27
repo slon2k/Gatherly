@@ -22,13 +22,14 @@ internal class InvitationConfiguration : IEntityTypeConfiguration<Invitation>
         builder.Property(e => e.Status)
             .IsRequired();
 
-        builder.Property(e => e.CreatedAt)
-            .HasColumnType("Date")
-            .IsRequired();
+        builder.IsAuditable();
+        //builder.Property(e => e.CreatedAt)
+        //    .HasColumnType("datetime2")
+        //    .IsRequired();
 
-        builder.Property(e => e.UpdatedAt)
-            .HasColumnType("Date")
-            .IsRequired(false);
+        //builder.Property(e => e.UpdatedAt)
+        //    .HasColumnType("datetime2")
+        //    .IsRequired(false);
 
         builder.HasOne(e => e.Member)
             .WithMany(e => e.Invitations)

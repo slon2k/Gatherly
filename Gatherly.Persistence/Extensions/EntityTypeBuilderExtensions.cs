@@ -14,4 +14,17 @@ internal static class EntityTypeBuilderExtensions
             .HasColumnName("Id")
             .IsRequired();
     }
+
+    internal static EntityTypeBuilder IsAuditable<TEntity>(this EntityTypeBuilder<TEntity> builder) where TEntity : Entity, IAuditableEntity
+    {
+        builder.Property(e => e.CreatedAt)
+            .HasColumnType("datetime2")
+            .IsRequired();
+
+        builder.Property(e => e.UpdatedAt)
+            .HasColumnType("datetime2")
+            .IsRequired(false);
+
+        return builder;
+    }
 }

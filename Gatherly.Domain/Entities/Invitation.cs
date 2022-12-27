@@ -3,7 +3,7 @@ using Gatherly.Domain.Primitives;
 
 namespace Gatherly.Domain.Entities
 {
-    public class Invitation : Entity
+    public class Invitation : Entity, IAuditableEntity
     {
         public Guid MemberId { get; private set; }
 
