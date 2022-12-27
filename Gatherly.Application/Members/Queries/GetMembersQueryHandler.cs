@@ -5,7 +5,7 @@ using Gatherly.Domain.Shared;
 
 namespace Gatherly.Application.Members.Queries;
 
-public class GetMembersQueryHandler : IQueryHandler<GetMembersQuery, IEnumerable<Member>>
+public class GetMembersQueryHandler : IQueryHandler<GetMembersQuery, IEnumerable<MemberResponse>>
 {
     private readonly IMemberRepository memberRepository;
 
@@ -14,13 +14,13 @@ public class GetMembersQueryHandler : IQueryHandler<GetMembersQuery, IEnumerable
         this.memberRepository = memberRepository;
     }
 
-    public async Task<Result<IEnumerable<Member>>> Handle(GetMembersQuery request, CancellationToken cancellationToken)
+    public async Task<Result<IEnumerable<MemberResponse>>> Handle(GetMembersQuery request, CancellationToken cancellationToken)
     {
 		try
 		{
-            var result = await memberRepository.GetAllAsync(cancellationToken);
+            var members = await memberRepository.GetAllAsync(cancellationToken);
 
-            return result.ToList();
+            return members.Select(m => new MemberResponse(m.Id, m.FirstName, m.LastName, m.Email)).ToList();
 		}
 		catch (Exception e)
 		{

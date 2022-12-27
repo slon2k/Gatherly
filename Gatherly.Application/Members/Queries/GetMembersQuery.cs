@@ -3,7 +3,7 @@ using Gatherly.Application.Abstractions;
 
 namespace Gatherly.Application.Members.Queries
 {
-    public class GetMembersQuery : IQuery<IEnumerable<Member>>
+    public class GetMembersQuery : IQuery<IEnumerable<MemberResponse>>
     {
     }
 }
