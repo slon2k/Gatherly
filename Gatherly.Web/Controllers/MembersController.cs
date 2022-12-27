@@ -5,13 +5,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Gatherly.Web.Controllers
 {
+    [Route("members")]
     public class MembersController : ApiControllerBase
     {
         public MembersController(ISender sender) : base(sender)
         {
         }
 
-        [HttpGet("members")]
+        [HttpGet]
         public async Task<IActionResult> GetMembers()
         {
             var result = await sender.Send(new GetMembersQuery());
@@ -20,10 +21,9 @@ namespace Gatherly.Web.Controllers
                 result => Ok(result),
                 errors => Problem(errors)
             );
-
         }
 
-        [HttpPost("members")]
+        [HttpPost]
         public async Task<IActionResult> CreateMember(CreateMemberCommand command)
         {
             var result = await sender.Send(command);
@@ -33,5 +33,17 @@ namespace Gatherly.Web.Controllers
                 errors => Problem(errors)
             );
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetMemberById(Guid id)
+        {
+            var result = await sender.Send(new GetMemberByIdQuery(id));
+
+            return result.Match(
+                result => Ok(result),
+                errors => Problem(errors)
+            );
+        }
+
     }
 }
