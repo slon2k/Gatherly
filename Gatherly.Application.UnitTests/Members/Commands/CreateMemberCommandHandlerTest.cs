@@ -1,9 +1,10 @@
-﻿namespace Gatherly.Application.UnitTests.Members.Commands;
-using Gatherly.Application.Members.Commands;
+﻿using Gatherly.Application.Members.Commands;
 using Gatherly.Domain.Entities;
 using Gatherly.Domain.Repositories;
 using Gatherly.Domain.Shared;
 using Moq;
+
+namespace Gatherly.Application.UnitTests.Members.Commands;
 
 public class CreateMemberCommandHandlerTest
 {
