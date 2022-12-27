@@ -19,7 +19,7 @@ internal class CreateMemberCommandHandler : ICommandHandler<CreateMemberCommand,
     {
         try
         {
-            if (await memberRepository.GetByEmailAsync(request.Email) is not null)
+            if (await memberRepository.GetByEmailAsync(request.Email, cancellationToken) is not null)
             {
                 return DuplicateEmail;
             }

@@ -73,9 +73,11 @@ public class CreateMemberCommandHandlerTest
 
         var result = await handler.Handle(command, default);
 
-        memberRepositoryMock.Verify(x => x.AddAsync(
-            It.Is<Member>(m => m.Email == command.Email && m.FirstName == command.FirstName && m.LastName == command.LastName && m.Id == result.Value.Id),
-            It.IsAny<CancellationToken>()), Times.Once);
+        memberRepositoryMock.Verify(
+            x => x.AddAsync(
+                It.Is<Member>(m => m.Email == command.Email && m.FirstName == command.FirstName && m.LastName == command.LastName && m.Id == result.Value.Id),
+                It.IsAny<CancellationToken>()),
+            Times.Once);
 
     }
 
