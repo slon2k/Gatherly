@@ -10,8 +10,8 @@ public class MemberRepository : RepositoryBase<Member>, IMemberRepository
     {
     }
 
-    public Member? GetByEmail(string email)
+    public async Task<Member?> GetByEmailAsync(string email, CancellationToken cancellationToken)
     {
-        return context.Members.FirstOrDefault(x => x.Email == email);
+        return await context.Members.FirstOrDefaultAsync(x => x.Email == email, cancellationToken);
     }
 }

@@ -4,5 +4,5 @@ namespace Gatherly.Domain.Repositories;
 
 public interface IMemberRepository : IRepository<Member>
 {
-    Member? GetByEmail(string email);
+    Task<Member?> GetByEmailAsync(string email, CancellationToken cancellationToken = default);
 }

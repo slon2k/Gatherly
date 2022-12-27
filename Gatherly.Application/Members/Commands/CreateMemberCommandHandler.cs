@@ -2,6 +2,7 @@
 using Gatherly.Domain.Entities;
 using Gatherly.Domain.Repositories;
 using Gatherly.Domain.Shared;
+using static Gatherly.Domain.Errors.Member;
 
 namespace Gatherly.Application.Members.Commands;
 
@@ -18,9 +19,9 @@ internal class CreateMemberCommandHandler : ICommandHandler<CreateMemberCommand,
     {
         try
         {
-            if (memberRepository.GetByEmail(request.Email) is not null)
+            if (await memberRepository.GetByEmailAsync(request.Email) is not null)
             {
-                return Error.Conflict("CreateMember.DuplicateEmail", "Email is not unique");
+                return DuplicateEmail;
             }
 
             var member = Member.Create(request.FirstName, request.LastName, request.Email);
