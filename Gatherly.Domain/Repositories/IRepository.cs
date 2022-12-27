@@ -17,6 +17,4 @@ public interface IRepository<TEntity> where TEntity : AggregateRoot
     void Delete(TEntity entity);
 
     void Update(TEntity entity);
-
-    Task SaveChangesAsync(CancellationToken cancellationToken = default);
 }

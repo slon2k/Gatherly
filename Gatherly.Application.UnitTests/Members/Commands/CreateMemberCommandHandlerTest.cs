@@ -9,9 +9,12 @@ public class CreateMemberCommandHandlerTest
 {
     private readonly Mock<IMemberRepository> memberRepositoryMock;
 
+    private readonly Mock<IUnitOfWork> unitOfWorkMock;
+
     public CreateMemberCommandHandlerTest()
     {
         memberRepositoryMock = new();
+        unitOfWorkMock = new();
     }
 
     [Fact]
@@ -19,7 +22,7 @@ public class CreateMemberCommandHandlerTest
     {
         var command = new CreateMemberCommand("email.example.com", "first", "last");
 
-        var handler = new CreateMemberCommandHandler(memberRepositoryMock.Object);        
+        var handler = new CreateMemberCommandHandler(memberRepositoryMock.Object, unitOfWorkMock.Object);        
         
         memberRepositoryMock.Setup(
             x => x.GetByEmailAsync(
@@ -39,7 +42,7 @@ public class CreateMemberCommandHandlerTest
     {
         var command = new CreateMemberCommand("email.example.com", "first", "last");
 
-        var handler = new CreateMemberCommandHandler(memberRepositoryMock.Object);        
+        var handler = new CreateMemberCommandHandler(memberRepositoryMock.Object, unitOfWorkMock.Object);        
         
         memberRepositoryMock.Setup(
             x => x.GetByEmailAsync(
@@ -63,7 +66,7 @@ public class CreateMemberCommandHandlerTest
     {
         var command = new CreateMemberCommand("email.example.com", "first", "last");
 
-        var handler = new CreateMemberCommandHandler(memberRepositoryMock.Object);
+        var handler = new CreateMemberCommandHandler(memberRepositoryMock.Object, unitOfWorkMock.Object);
 
         memberRepositoryMock.Setup(
             x => x.GetByEmailAsync(
@@ -78,7 +81,25 @@ public class CreateMemberCommandHandlerTest
                 It.Is<Member>(m => m.Email == command.Email && m.FirstName == command.FirstName && m.LastName == command.LastName && m.Id == result.Value.Id),
                 It.IsAny<CancellationToken>()),
             Times.Once);
-
     }
 
+    [Fact]
+    public async Task Handle_DoesNotCallSave_WhenEmailIsNotUnique()
+    {
+        var command = new CreateMemberCommand("email.example.com", "first", "last");
+
+        var handler = new CreateMemberCommandHandler(memberRepositoryMock.Object, unitOfWorkMock.Object);
+
+        memberRepositoryMock.Setup(
+            x => x.GetByEmailAsync(
+                It.IsAny<string>(),
+                It.IsAny<CancellationToken>()
+                )).ReturnsAsync(Member.Create(command.FirstName, command.LastName, command.Email));
+
+        var result = await handler.Handle(command, default);
+
+        unitOfWorkMock.Verify(
+            x => x.SaveChangesAsync(It.IsAny<CancellationToken>()),
+            Times.Never);
+    }
 }

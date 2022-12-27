@@ -49,11 +49,6 @@ public abstract class RepositoryBase<TEntity> : IRepository<TEntity> where TEnti
         return await context.Set<TEntity>().ToListAsync(cancellationToken);
     }
 
-    public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
-    {
-        await context.SaveChangesAsync(cancellationToken);
-    }
-
     public void Update(TEntity entity)
     {
         context.Entry(entity).State = EntityState.Modified;

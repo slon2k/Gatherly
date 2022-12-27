@@ -28,6 +28,8 @@ public static class DependencyInjection
         
         services.AddScoped<IGatheringRepository, GatheringRepository>();
 
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+
         return services;
     }
 }

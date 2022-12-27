@@ -10,9 +10,12 @@ internal class CreateMemberCommandHandler : ICommandHandler<CreateMemberCommand,
 {
     private readonly IMemberRepository memberRepository;
 
-    public CreateMemberCommandHandler(IMemberRepository memberRepository)
+    private readonly IUnitOfWork unitOfWork;
+
+    public CreateMemberCommandHandler(IMemberRepository memberRepository, IUnitOfWork unitOfWork)
     {
         this.memberRepository = memberRepository;
+        this.unitOfWork = unitOfWork;
     }
 
     public async Task<Result<CreateMemberResponse>> Handle(CreateMemberCommand request, CancellationToken cancellationToken)
@@ -28,7 +31,7 @@ internal class CreateMemberCommandHandler : ICommandHandler<CreateMemberCommand,
             
             await memberRepository.AddAsync(member, cancellationToken);
 
-            await memberRepository.SaveChangesAsync(cancellationToken);
+            await unitOfWork.SaveChangesAsync(cancellationToken);
             
             return new CreateMemberResponse(member.Id, member.FirstName, member.LastName, member.Email);
         }
