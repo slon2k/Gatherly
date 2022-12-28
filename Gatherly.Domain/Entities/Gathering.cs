@@ -31,7 +31,7 @@ namespace Gatherly.Domain.Entities
 
         public DateTime? InvitationsExpireAt { get; set; }
 
-        public Member Creator { get; private set; }
+        public Member? Creator { get; private set; }
 
         public IReadOnlyCollection<Invitation> Invitations => invitations;
 

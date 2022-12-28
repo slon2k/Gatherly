@@ -15,9 +15,9 @@ namespace Gatherly.Domain.Entities
 
         public DateTime? UpdatedAt { get; private set; }
 
-        public virtual Member Member { get; private set; }
+        public virtual Member? Member { get; private set; }
 
-        public virtual Gathering Gathering { get; private set; }
+        public virtual Gathering? Gathering { get; private set; }
 
         private Invitation(Guid id) : base(id)
         {
